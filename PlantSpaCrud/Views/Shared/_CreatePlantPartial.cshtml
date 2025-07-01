@@ -1,0 +1,109 @@
+﻿@model PlantSpaCrud.ViewModels.PlantViewModel
+<div class="modal-header">
+    <h5 class="modal-title">Add New Plant</h5>
+</div>
+
+
+<div class="modal-body">
+    @using (Html.BeginForm("CreatePlant", "Plant", FormMethod.Post, new { id = "createPlantForm", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-md-7">
+                <h4> Plant Information</h4>
+                <div class="form-group mb-2">
+                    @Html.LabelFor(model => model.PlantName, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.EditorFor(model => model.PlantName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PlantName, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group mb-2">
+                    @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group mb-2">
+                    @Html.LabelFor(model => model.PlantPrice, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.EditorFor(model => model.PlantPrice, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PlantPrice, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group mb-2">
+                    @Html.LabelFor(model => model.FlowerBearing, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.EditorFor(model => model.FlowerBearing)
+                    @Html.ValidationMessageFor(model => model.FlowerBearing, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group mb-2">
+                    @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.Categories, "CategoryId", "CategoryName"), "Select Category", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group mb-2">
+                    <img id="imageFile" src="~/images/noimage.png" alt="image" width="100" /><br />
+                    @Html.LabelFor(model => model.ProfileFile, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <input onchange="readUrl(this)" type="file" name="ProfileFile" id="ProfileFile" class="invisible" />
+                </div>
+            </div>
+            <div class="col-md-5">
+                <h4> Plant Care Information</h4>
+                <button onclick="AddCare()" type="button" class="btn btn-warning mb-2">Add Care</button>
+                @Html.Partial("_AddCares", Model.PlantCareTypes)
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Create Plant</button>
+        </div>
+    }
+</div>
+
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+<script>
+    function readUrl(i) {
+        if (i.files && i.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("#imageFile").attr('src', e.target.result)
+            }
+            reader.readAsDataURL(i.files[0]);
+        }
+    }
+    function deleteRow(btn) {
+        $(btn).closest('tr').remove();
+        updatePlantCareTypeIndex();
+    }
+    function AddCare() {
+        var lastIndex = parseInt($('#HIndex').val());
+        var newrow =
+            `
+        <tr>
+    <td>
+        <input class="form-control" type="text" value="" name="PlantCareTypes[${lastIndex}].InsecticideName" />
+
+    </td>
+    <td>
+        <input class="form-control" type="text" value="" name="PlantCareTypes[${lastIndex}].Fertilizer" />
+
+    </td>
+
+    <td>
+        <button onclick="deleteRow(this)" type="button"class="btn btn-danger">Delete</button>
+
+    </td>
+</tr>
+       `;
+        $("#ExTable tbody").append(newrow);
+        $("#HIndex").val(lastIndex + 1);
+        updatePlantCareTypeIndex();
+    }
+    function updatePlantCareTypeIndex() {
+        $("#ExTable tbody tr").each(function (index) {
+            $(this).find("input[name^='PlantCareTypes']").each(function () {
+                var name = $(this).attr("name");
+                name = name.replace(/PlantCareTypes\[\d+\]/, "PlantCareTypes[" + index + "]");
+                $(this).attr("name", name)
+            })
+        })
+    }
+
+</script>

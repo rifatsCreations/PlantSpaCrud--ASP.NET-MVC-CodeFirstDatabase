@@ -1,0 +1,29 @@
+﻿@model List<PlantSpaCrud.Models.PlantCareType>
+<table id="ExTable" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Insecticide Name</th>
+            <th>Fertilizer Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                <td>
+                    <input type="text" value="@Model[i].InsecticideName" class="form-control" name="PlantCareTypes[@i].InsecticideName" />
+                </td>
+                <td>
+                    <input type="text" value="@Model[i].Fertilizer" class="form-control" name="PlantCareTypes[@i].Fertilizer" />
+                </td>
+                <td>
+                    <button onclick="deleteRow(this)" type="button" class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<input type="hidden" id="HIndex" value="@Model.Count" />
+
+
