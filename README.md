@@ -1,43 +1,36 @@
-🌿 Plant Spa CRUD (ASP.NET MVC)
-A simple web app to manage plants, categories, and care types using ASP.NET MVC and Entity Framework (Code First).
+# 🌿 Plant Spa CRUD (ASP.NET MVC)
 
-🔧 Features
-Add, edit, delete plants
+A simple web app to manage plants, categories, and care types using **ASP.NET MVC** and **Entity Framework (Code First)**.
 
-Assign category and care types
+## 🔧 Features
 
-Upload plant image (default if missing)
+- Add, edit, delete plants  
+- Assign category and care types  
+- Upload plant image (default if missing)  
+- Partial views + AJAX for smooth UI  
+- Responsive navbar (Home, Plant List)  
 
-Partial views + AJAX for smooth UI
+## 🛠️ Tech Stack
 
-Responsive navbar (Home, Plant List)
+- ASP.NET MVC 5  
+- Entity Framework 6 (Code First)  
+- SQL Server  
+- Bootstrap + jQuery  
 
-🛠️ Tech Stack
-ASP.NET MVC 5
+## 🖼️ Layout Highlights
 
-Entity Framework 6 (Code First)
+- `_Layout.cshtml` uses Bootstrap navbar  
+- Custom hover styles on nav links  
+- Uses `@RenderBody()` and `@RenderSection()`  
 
-SQL Server
+## 📂 Image Handling
 
-Bootstrap + jQuery
+- Uploaded to `/images/` folder  
+- Unique filename via `GUID`  
+- Defaults to `noimage.png`  
 
-🖼️ Layout Highlights
-_Layout.cshtml uses Bootstrap navbar
+## 🧩 Notes
 
-Custom hover styles on nav links
-
-Uses @RenderBody() and @RenderSection()
-
-📂 Image Handling
-Uploaded to /images/ folder
-
-Unique filename via GUID
-
-Defaults to noimage.png
-
-🧩 Notes
-Create /images/ folder manually
-
-Run Add-Migration → Update-Database
-
-Uses AJAX and modals for forms
+- Create `/images/` folder manually  
+- Run `Add-Migration` → `Update-Database`  
+- Uses AJAX and modals for forms  
